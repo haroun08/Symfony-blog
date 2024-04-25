@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #ecf0f1; 
+        }
+
+        article {
+            margin-top: 20px;
+            background-color: #fff; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #3498db; 
+        }
+
+        .metadata {
+            color: #95a5a6; 
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            color: #34495e; 
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <article>
+        <h2>{{article.title}}</h2>
+        <div class="metadata">
+            Écrit le {{ article.createdAt|date('d/m/Y') }} à {{ article.createdAt|date('H:i') }} dans la categorie {{ article.category.title}}
+        </div>
+        <div class="content">
+            <img src="{{article.image}}" alt="Description">
+            {{article.content  }}
+        </div>
+    </article>
+
+    <section id="commentaires">
+        <h1>{{ article.comments|length }} Commentaires</h1>
+        {% for comment in article.comments %}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-3">
+                        {{ comment.author }} (<small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>)
+                    </div>
+                    <div class="col">
+                        {{ comment.contenu }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if app.user %}
+        {{ form_start(commentForm)}}
+        {{ form_row(commentForm.author,{'attr' : {'placeholder':"Votre nom"}})}}
+        {{ form_row(commentForm.contenu,{'attr' : {'placeholder':"Votre Commentaire"}})}}
+        <button type="submit" class="btn btn-success">Commenter!</button>
+        {{ form_end(commentForm)}}
+        {% else %}
+        <h2>Connect To Comment</h2>
+        <a href="{{path('security_login')}}" class="btn btn-primary">Login</a>
+        {% endif %}
+
+    </section>
+{% endblock %}

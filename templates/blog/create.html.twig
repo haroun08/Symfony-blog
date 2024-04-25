@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #ecf0f1;
+            font-family: 'Arial', sans-serif;
+        }
+
+        form#formArticle {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        form#formArticle h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form#formArticle .form-control {
+            margin-bottom: 15px;
+        }
+
+        form#formArticle .btn-success {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{{ form_start(formArticle) }}
+    {{ form_row(formArticle.title,{'attr':{'placeholder ' :"Titre de l'article"}})}}
+    {{ form_row(formArticle.category)}}
+    {{ form_row(formArticle.content,{'attr':{'placeholder ' :"Contenu de l'article"}})}}
+    {{ form_row(formArticle.image,{'attr':{'placeholder ' :"URL de l'image"}})}}
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-success btn-lg">
+            {% if editMode %}
+            Enregistrer les modifications
+            {% else %}  
+            Ajouter l'article
+            {% endif %}
+        </button>
+    </div>
+    {{ form_end(formArticle)}} 
+{% endblock %}

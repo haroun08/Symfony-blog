@@ -1,0 +1,10 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+contact_show:
+    path: '/contact'
+    controller: 'App\Controller\ContactController::showForm'
+
+contact_process:
+    path: '/contact/process'
+    controller: 'App\Controller\ContactController::processForm'
